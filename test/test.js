@@ -80,13 +80,7 @@ describe("vending machine", () => {
 
   it("should return the correct change", () => {
     // Exercise
-    machine.insertCoin(500);
-    machine.insertCoin(500);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
+    machine.insertCoins(500, 500, 100, 100, 100, 100, 100);
     machine.pressButton("A");
     //machine.pressButton(4);
 
@@ -104,13 +98,7 @@ describe("vending machine", () => {
     };
 
     // Exercise
-    machine.insertCoin(500);
-    machine.insertCoin(500);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
+    machine.insertCoins(500, 500, 100, 100, 100, 100, 100);
     machine.pressButton("A");
     machine.pressButton(4);
 
@@ -120,9 +108,7 @@ describe("vending machine", () => {
 
   it("should give an error if no change is available", () => {
     // Exercise
-    machine.insertCoin(500);
-    machine.insertCoin(500);
-    machine.insertCoin(500);
+    machine.insertCoins(500, 500, 500);
     machine.pressButton("A");
     machine.pressButton(1);
 
@@ -132,11 +118,7 @@ describe("vending machine", () => {
 
   it("should reinitalise after vending", () => {
     // Exercise
-    machine.insertCoin(500);
-    machine.insertCoin(500);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
-    machine.insertCoin(100);
+    machine.insertCoins(500, 500, 100, 100, 100);
     machine.pressButton("A");
     machine.pressButton(4);
 
@@ -162,9 +144,7 @@ describe("vending machine", () => {
 
   it("should display error if item count is zero", () => {
     // Exercise
-    machine.insertCoin(500);
-    machine.insertCoin(500);
-    machine.insertCoin(500);
+    machine.insertCoins(500, 500, 500);
     machine.pressButton("C");
     machine.pressButton(4);
 
