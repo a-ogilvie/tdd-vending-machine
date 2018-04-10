@@ -41,7 +41,13 @@ class VendingMachine {
     if (typeof button === "string") {
       this._selectRow(button);
     } else if (this.selection.row) {
-      return this._selectColumn(button);
+      this._selectColumn(button);
+      const selectedItem = this._selectItem();
+      if (this._errorCheck(selectedItem)) {
+        return this._vend(selectedItem);
+      } else {
+        this._initialise();
+      }
     }
   }
 
@@ -55,10 +61,9 @@ class VendingMachine {
     this.selection.column = column;
     console.log(this.selection.row, column);
     this._console.push(this.selection.row, column);
-    return this._vend();
   }
 
-  _vend() {
+  _selectItem() {
     const buttonMap = {
       A: 0,
       B: 1,
@@ -68,20 +73,15 @@ class VendingMachine {
     const row = buttonMap[this.selection.row];
     const column = this.selection.column - 1;
     const selectedItem = this.inventory[row][column];
+    return selectedItem;
+  }
 
-    const isChangeAvailable = this._checkChange(selectedItem.price);
-    const isItemAvailable = this._checkCount(selectedItem.count);
-    const isBalanceEnough = this._checkEnough(selectedItem.price);
+  _errorCheck(item) {
+    const isChangeAvailable = this._checkChange(item.price);
+    const isItemAvailable = this._checkCount(item.count);
+    const isBalanceEnough = this._checkEnough(item.price);
 
-    if (isChangeAvailable && isItemAvailable && isBalanceEnough) {
-      selectedItem.count--;
-      console.log("Here is your " + selectedItem.name);
-      const calculatedChange = this._calculateChangeTotal(selectedItem.price);
-      this._initialise();
-      return calculatedChange;
-    }
-
-    this._initialise();
+    return isChangeAvailable && isItemAvailable && isBalanceEnough;
   }
 
   _checkChange(price) {
@@ -112,7 +112,15 @@ class VendingMachine {
     return true;
   }
 
-  _calculateChangeTotal(price) {
+  _vend(item) {
+    item.count--;
+    console.log("Here is your " + item.name);
+    const calculatedChange = this._calculateTotalChange(item.price);
+    this._initialise();
+    return calculatedChange;
+  }
+
+  _calculateTotalChange(price) {
     let change = this.balance - price;
 
     const returnedCoins = this._calculateChangeDenomination(change);
