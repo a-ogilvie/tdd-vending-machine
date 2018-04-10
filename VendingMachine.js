@@ -72,8 +72,7 @@ class VendingMachine {
     };
     const row = buttonMap[this.selection.row];
     const column = this.selection.column - 1;
-    const selectedItem = this.inventory[row][column];
-    return selectedItem;
+    return this.inventory[row][column];
   }
 
   _errorCheck(item) {
