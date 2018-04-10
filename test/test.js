@@ -1,20 +1,19 @@
 const VendingMachine = require("../VendingMachine");
 const inventory = require("../inventory");
 const { expect } = require("chai");
+let machine;
 
 describe("vending machine", () => {
-  it("should import the inventory correctly", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
+  beforeEach(() => {
+    machine = new VendingMachine(inventory);
+  });
 
+  it("should import the inventory correctly", () => {
     // Assert
     expect(machine.inventory).to.deep.equal(inventory);
   });
 
   it("should accept valid coins", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.insertCoin(500);
 
@@ -29,9 +28,6 @@ describe("vending machine", () => {
   });
 
   it("should reject non-existent coins", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.insertCoin(13);
 
@@ -46,9 +42,6 @@ describe("vending machine", () => {
   });
 
   it("should accept a letter A-D as a row selection when no row is selected", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.pressButton("A");
 
@@ -57,9 +50,6 @@ describe("vending machine", () => {
   });
 
   it("should reject a number when no row is selected", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.pressButton(1);
 
@@ -69,9 +59,6 @@ describe("vending machine", () => {
   });
 
   it("should display the item name", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.pressButton(1);
 
@@ -81,9 +68,6 @@ describe("vending machine", () => {
   });
 
   it("should decrease by 1", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.insertCoin(100);
     machine.insertCoin(50);
@@ -95,9 +79,6 @@ describe("vending machine", () => {
   });
 
   it("should return the correct change", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.insertCoin(500);
     machine.insertCoin(500);
@@ -115,7 +96,6 @@ describe("vending machine", () => {
 
   it("should log the correct change denominations", () => {
     // Setup
-    const machine = new VendingMachine(inventory);
     const expectedChange = {
       10: 0,
       50: 0,
@@ -139,9 +119,6 @@ describe("vending machine", () => {
   });
 
   it("should give an error if no change is available", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.insertCoin(500);
     machine.insertCoin(500);
@@ -154,9 +131,6 @@ describe("vending machine", () => {
   });
 
   it("should reinitalise after vending", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.insertCoin(500);
     machine.insertCoin(500);
@@ -172,31 +146,21 @@ describe("vending machine", () => {
   });
 
   it("should dispay warning if not enough coins inserted", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.insertCoin(500);
     machine.pressButton("B");
     machine.pressButton(2);
 
     // Assert
-    // expect(machine.selection.row).to.be.undefined;
     expect(machine._console[3]).to.equal("Not enough money.");
   });
 
   it("should have balance of zero when no coins inserted", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Assert
     expect(machine.balance).to.equal(0);
   });
 
   it("should display error if item count is zero", () => {
-    // Setup
-    const machine = new VendingMachine(inventory);
-
     // Exercise
     machine.insertCoin(500);
     machine.insertCoin(500);
