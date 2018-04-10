@@ -77,14 +77,14 @@ class VendingMachine {
   }
 
   _errorCheck(item) {
-    const isChangeAvailable = this._checkChange(item.price);
-    const isItemAvailable = this._checkCount(item.count);
-    const isBalanceEnough = this._checkEnough(item.price);
+    const isChangeAvailable = this._checkChangeAvailable(item.price);
+    const isItemAvailable = this._checkItemAvailable(item.count);
+    const isBalanceEnough = this._checkBalanceEnough(item.price);
 
     return isChangeAvailable && isItemAvailable && isBalanceEnough;
   }
 
-  _checkChange(price) {
+  _checkChangeAvailable(price) {
     if (this._calculateChangeDenomination(this.balance - price)) {
       return true;
     } else {
@@ -94,7 +94,7 @@ class VendingMachine {
     }
   }
 
-  _checkCount(count) {
+  _checkItemAvailable(count) {
     if (count === 0) {
       console.error("Out of stock.");
       this._console.push("Out of stock.");
@@ -103,7 +103,7 @@ class VendingMachine {
     return true;
   }
 
-  _checkEnough(price) {
+  _checkBalanceEnough(price) {
     if (this._tillTotal < price) {
       console.error("Not enough money.");
       this._console.push("Not enough money.");
