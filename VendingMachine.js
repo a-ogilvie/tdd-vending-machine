@@ -21,7 +21,7 @@ class VendingMachine {
 
   insertCoins(...coins) {
     coins.forEach((coin) => {
-      insertCoin(coin);
+      this.insertCoin(coin);
     });
   }
 
