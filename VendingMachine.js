@@ -19,6 +19,12 @@ class VendingMachine {
     }
   }
 
+  insertCoins(...coins) {
+    coins.forEach((coin) => {
+      insertCoin(coin);
+    });
+  }
+
   get balance() {
     return this.coinsInserted.reduce((total, nextCoin) => total + nextCoin, 0);
   }
